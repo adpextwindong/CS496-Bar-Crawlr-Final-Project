@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">BarCrawlr</string>
+    <string name="Find_By_Location" />
+    <string name="Find_Events" />
+    <string name="Find_By_Beer" />
 </resources>
