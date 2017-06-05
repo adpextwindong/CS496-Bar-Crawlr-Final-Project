@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_view_fav_bars"
+        android:icon="@mipmap/ic_favoritebars"
+        android:title="@string/action_view_fav_bars"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_view_fav_beers"
+        android:icon="@mipmap/ic_favoritebeers"
+        android:title="@string/action_view_fav_beers"
+        app:showAsAction="never" />
+
+</menu>

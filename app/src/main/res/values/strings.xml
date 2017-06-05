@@ -3,4 +3,7 @@
     <string name="Find_By_Location" />
     <string name="Find_Events" />
     <string name="Find_By_Beer" />
+    <string name="view_favorite_beers" />
+    <string name="action_view_fav_bars" />
+    <string name="action_view_fav_beers" />
 </resources>
