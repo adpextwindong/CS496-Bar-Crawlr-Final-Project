@@ -1,8 +1,11 @@
 package group5.com.barcrawlr;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -50,6 +53,39 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(mEventSearchIntent);
             }
         });
+
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.favorites, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_view_fav_bars:
+                viewFavBars();
+                return true;
+            case R.id.action_view_fav_beers:
+                viewFavBeers();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void viewFavBeers() {
+        Intent favBeersIntent = new Intent(this, FavoriteBeer.class);
+        startActivity(favBeersIntent);
+    }
+
+    private void viewFavBars() {
+        Intent favBarsIntent = new Intent(this, FavoriteBars.class);
+        startActivity(favBarsIntent);
     }
 
 }
