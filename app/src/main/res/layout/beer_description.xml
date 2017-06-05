@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="group5.com.barcrawlr.BeerSearchActivity">
+
+    <TextView
+        android:id="@+id/tv_beer_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="40sp"
+        android:textColor="#000"
+        android:layout_marginRight="16dp"/>
+
+    <ImageView
+        android:id="@+id/iv_beer_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="40sp"
+        android:textColor="#000"
+        android:layout_marginRight="16dp"
+        android:text="Description:"/>
+
+    <TextView
+        android:id="@+id/tv_beer_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:textSize="22dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="40sp"
+        android:textColor="#000"
+        android:layout_marginRight="16dp"
+        android:text="Characteristics:"/>
+
+    <TextView
+        android:id="@+id/tv_beer_characteristics"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:textSize="22dp"/>
+
+</LinearLayout>
