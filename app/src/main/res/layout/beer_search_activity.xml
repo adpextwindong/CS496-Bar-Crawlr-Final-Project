@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="group5.com.barcrawlr.BeerSearchActivity">
 
     <EditText
         android:id="@+id/et_search_box"
@@ -17,31 +21,31 @@
         android:text="Search"
         android:textSize="22sp"/>
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <!--<FrameLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_search_results"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+        <!--<android.support.v7.widget.RecyclerView-->
+            <!--android:id="@+id/rv_search_results"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent" />-->
 
-        <TextView
-            android:id="@+id/tv_loading_error_message"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:padding="16dp"
-            android:visibility="invisible"/>
-        <!--android:text="@string/loading_error_message" -->
+        <!--<TextView-->
+            <!--android:id="@+id/tv_loading_error_message"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textSize="20sp"-->
+            <!--android:padding="16dp"-->
+            <!--android:visibility="invisible"/>-->
+        <!--&lt;!&ndash;android:text="@string/loading_error_message" &ndash;&gt;-->
 
-        <ProgressBar
-            android:id="@+id/pb_loading_indicator"
-            android:layout_width="72dp"
-            android:layout_height="72dp"
-            android:layout_margin="32dp"
-            android:layout_gravity="top|center_horizontal"
-            android:visibility="invisible"/>
-    </FrameLayout>
+        <!--<ProgressBar-->
+            <!--android:id="@+id/pb_loading_indicator"-->
+            <!--android:layout_width="72dp"-->
+            <!--android:layout_height="72dp"-->
+            <!--android:layout_margin="32dp"-->
+            <!--android:layout_gravity="top|center_horizontal"-->
+            <!--android:visibility="invisible"/>-->
+    <!--</FrameLayout>-->
 
 </LinearLayout>
