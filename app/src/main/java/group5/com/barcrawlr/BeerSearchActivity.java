@@ -52,6 +52,7 @@ public class BeerSearchActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 doBrewerySearch(mEditTextSearch.getText().toString());
+                //TODO implement *_* in search
                 //search database for value
             }
         });
@@ -59,7 +60,10 @@ public class BeerSearchActivity extends AppCompatActivity {
 
     private void doBrewerySearch(String searchQuery)
     {
-        String beerSearchURL = BreweryDBUtils.buildBeerSearchURL(searchQuery);
+        StringBuilder searchQueryBuilder = new StringBuilder(searchQuery);
+        searchQueryBuilder.insert(0, '*');
+        searchQueryBuilder.append('*');
+        String beerSearchURL = BreweryDBUtils.buildBeerSearchURL(searchQueryBuilder.toString());
         Log.d("MainActivity", "got search url: " + beerSearchURL);
         new BrewerySearchTask().execute(beerSearchURL);
     }

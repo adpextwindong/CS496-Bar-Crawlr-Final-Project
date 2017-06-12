@@ -51,18 +51,25 @@ public class BeerSearchAdapter extends RecyclerView.Adapter<BeerSearchAdapter.Be
 
     class BeerItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView mSearchResultTV;
+        private TextView mAbvTV;
+        private TextView mStyleTV;
 
         public BeerItemViewHolder(View itemView) {
             super(itemView);
             mSearchResultTV = (TextView)itemView.findViewById(R.id.tv_search_result);
+            mAbvTV = (TextView) itemView.findViewById(R.id.tv_search_result_abv);
+            mStyleTV = (TextView)itemView.findViewById(R.id.tv_search_result_style);
         }
 
         @Override
         public void onClick(View v) {
+            System.out.println(mSearchResultTV.getText());
         }
 
         public void bind(BreweryDBUtils.beerDetail searchResult) {
             mSearchResultTV.setText(searchResult.beerName);
+            mAbvTV.setText(searchResult.abv);
+            mStyleTV.setText(searchResult.style);
         }
     }
 

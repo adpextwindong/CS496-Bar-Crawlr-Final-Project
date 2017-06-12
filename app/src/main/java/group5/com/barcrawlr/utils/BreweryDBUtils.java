@@ -18,6 +18,7 @@ public class BreweryDBUtils {
 
     public static final String BASE_URL = "http://api.brewerydb.com/v2/";
     public static final String KEY_PARAM = "key";
+    public static final String NAME_PARAM = "name";
     public static final String BEER_SEARCH_PARAM = "beers/";
     public static final String BREW_SEARCH_PARAM = "breweries/";
 
@@ -25,6 +26,8 @@ public class BreweryDBUtils {
 
     public static class beerDetail implements Serializable {
         public String beerName;
+        public String abv;
+        public String style;
         public String description;
     }
 
@@ -37,6 +40,7 @@ public class BreweryDBUtils {
 
         return Uri.parse(BASE_URL).buildUpon()
                 .appendQueryParameter(KEY_PARAM, API_KEY)
+                .appendQueryParameter(NAME_PARAM, beerName)
                 .appendPath("beers")
 //                .appendQueryParameter(OWM_FORECAST_QUERY_PARAM, forecastLocation)
 //                .appendQueryParameter(OWM_FORECAST_UNITS_PARAM, temperatureUnits)
@@ -67,7 +71,25 @@ public class BreweryDBUtils {
                 beerDetail searchResult = new beerDetail();
                 JSONObject searchResultItem = searchResultsItems.getJSONObject(i);
                 searchResult.beerName = searchResultItem.getString("name");
-                //searchResult.description = searchResultItem.getString("description");
+
+                try {
+                    searchResult.abv = searchResultItem.getString("abv");
+                } catch (JSONException e) {
+                    searchResult.abv = "N/A";
+                }
+
+                try{
+                    searchResult.style = searchResultItem.getJSONObject("style").getString("shortName");
+                } catch (JSONException e) {
+                    searchResult.abv = "N/A";
+                }
+
+                try{
+                    searchResult.description = searchResultItem.getString("description");
+                } catch (JSONException e) {
+                    searchResult.abv = "N/A";
+                }
+
                 searchResultsList.add(searchResult);
             }
             return searchResultsList;
