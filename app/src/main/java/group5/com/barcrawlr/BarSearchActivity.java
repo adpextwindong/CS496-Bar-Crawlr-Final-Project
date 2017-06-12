@@ -13,6 +13,7 @@ public class BarSearchActivity extends AppCompatActivity {
 
     Button mButtonSearch;
     EditText mEditTextSearch;
+    //RecyclerView
 
     @Override
     public void onCreate(Bundle savedInstanceState)
