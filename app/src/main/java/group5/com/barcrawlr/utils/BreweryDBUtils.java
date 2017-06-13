@@ -32,8 +32,13 @@ public class BreweryDBUtils {
     }
 
     public static class barDetail implements Serializable {
+        public static final String EXTRA_BAR_ITEM = "group5.com.barcrawlr.utils.BarItem.SearchResult";
         public String barName;
         public String description;
+        public String established;
+        public boolean isOrganic;
+        public String websiteUrl;
+        public String imageUrl;
     }
 
     public static String buildBeerSearchURL(String beerName) {
@@ -49,11 +54,13 @@ public class BreweryDBUtils {
     public static String buildBarSearchURL(String barName) {
 
         return Uri.parse(BASE_URL).buildUpon()
+                .appendQueryParameter(KEY_PARAM, API_KEY)
+                .appendQueryParameter(NAME_PARAM, barName)
+                .appendPath("breweries")
                 .build()
                 .toString();
     }
 
-    //TODO: use gson instead
     public static ArrayList<beerDetail> parseBeerSearchJSON(String beerJSON) {
         try {
             JSONObject beerObj = new JSONObject(beerJSON);
@@ -88,6 +95,64 @@ public class BreweryDBUtils {
                     searchResult.imageUrl = searchResultItem.getJSONObject("labels").getString("icon");
                 } catch (JSONException e) {
                     searchResult.imageUrl = null;
+                }
+
+                searchResultsList.add(searchResult);
+            }
+            return searchResultsList;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static ArrayList<barDetail> parseBarSearchJSON(String barJSON) {
+        try {
+            JSONObject beerObj = new JSONObject(barJSON);
+            JSONArray searchResultsItems = beerObj.getJSONArray("data");
+
+            ArrayList<barDetail> searchResultsList = new ArrayList<barDetail>();
+            for(int i=0; i<searchResultsItems.length(); i++)
+            {
+                barDetail searchResult = new barDetail();
+                JSONObject searchResultItem = searchResultsItems.getJSONObject(i);
+                searchResult.barName = searchResultItem.getString("name");
+
+                try {
+                    searchResult.websiteUrl = searchResultItem.getString("website");
+                } catch (JSONException e) {
+                    searchResult.websiteUrl = "N/A";
+                }
+
+                try {
+                    String temp = searchResultItem.getString("isOrganic");
+                    if(temp == "Y")
+                        searchResult.isOrganic = true;
+                    else
+                        searchResult.isOrganic = false;
+                } catch (JSONException e) {
+                    searchResult.established = "N/A";
+                }
+
+                try {
+                    searchResult.established = searchResultItem.getString("established");
+                } catch (JSONException e) {
+                    searchResult.established = "N/A";
+                }
+
+                try{
+                    searchResult.imageUrl = searchResultItem.getJSONObject("images").getString("icon");
+                } catch (JSONException e) {
+                    searchResult.imageUrl = "N/A";
+                }
+
+                try{
+                    searchResult.description = searchResultItem.getString("description");
+                } catch (JSONException e) {
+                    searchResult.description = "N/A";
                 }
 
                 searchResultsList.add(searchResult);
