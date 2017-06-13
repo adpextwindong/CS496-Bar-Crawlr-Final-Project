@@ -21,6 +21,7 @@
         <activity android:name=".BarSearchActivity" />
         <activity android:name=".BeerSearchActivity" />
         <activity android:name=".EventSearchActivity" />
+        <activity android:name=".BeerDescriptionActivity" />
         <activity android:name=".FavoriteBeer"></activity>
         <activity android:name=".FavoriteBars"></activity>
     </application>

@@ -86,5 +86,4 @@ public class MainActivity extends AppCompatActivity {
         Intent favBarsIntent = new Intent(this, FavoriteBars.class);
         startActivity(favBarsIntent);
     }
-
 }

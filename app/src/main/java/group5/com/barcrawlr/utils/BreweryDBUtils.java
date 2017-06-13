@@ -19,16 +19,16 @@ public class BreweryDBUtils {
     public static final String BASE_URL = "http://api.brewerydb.com/v2/";
     public static final String KEY_PARAM = "key";
     public static final String NAME_PARAM = "name";
-    public static final String BEER_SEARCH_PARAM = "beers/";
-    public static final String BREW_SEARCH_PARAM = "breweries/";
 
     public static final String API_KEY = "00018739ed2662a0c01fb436c996e404";
 
     public static class beerDetail implements Serializable {
+        public static final String EXTRA_BEER_ITEM = "group5.com.barcrawlr.utils.BeerItem.SearchResult";
         public String beerName;
         public String abv;
         public String style;
         public String description;
+        public String imageUrl;
     }
 
     public static class barDetail implements Serializable {
@@ -42,9 +42,6 @@ public class BreweryDBUtils {
                 .appendQueryParameter(KEY_PARAM, API_KEY)
                 .appendQueryParameter(NAME_PARAM, beerName)
                 .appendPath("beers")
-//                .appendQueryParameter(OWM_FORECAST_QUERY_PARAM, forecastLocation)
-//                .appendQueryParameter(OWM_FORECAST_UNITS_PARAM, temperatureUnits)
-//                .appendQueryParameter(OWM_FORECAST_APPID_PARAM, OWM_FORECAST_APPID)
                 .build()
                 .toString();
     }
@@ -52,9 +49,6 @@ public class BreweryDBUtils {
     public static String buildBarSearchURL(String barName) {
 
         return Uri.parse(BASE_URL).buildUpon()
-//                .appendQueryParameter(OWM_FORECAST_QUERY_PARAM, forecastLocation)
-//                .appendQueryParameter(OWM_FORECAST_UNITS_PARAM, temperatureUnits)
-//                .appendQueryParameter(OWM_FORECAST_APPID_PARAM, OWM_FORECAST_APPID)
                 .build()
                 .toString();
     }
@@ -87,7 +81,13 @@ public class BreweryDBUtils {
                 try{
                     searchResult.description = searchResultItem.getString("description");
                 } catch (JSONException e) {
-                    searchResult.abv = "N/A";
+                    searchResult.description = "N/A";
+                }
+
+                try{
+                    searchResult.imageUrl = searchResultItem.getJSONObject("labels").getString("icon");
+                } catch (JSONException e) {
+                    searchResult.imageUrl = null;
                 }
 
                 searchResultsList.add(searchResult);

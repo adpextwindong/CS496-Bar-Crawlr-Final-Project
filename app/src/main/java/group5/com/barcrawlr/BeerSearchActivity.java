@@ -1,5 +1,6 @@
 package group5.com.barcrawlr;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -22,7 +23,8 @@ import group5.com.barcrawlr.utils.NetworkUtils;
  * Created by georgecrary on 6/4/17.
  */
 
-public class BeerSearchActivity extends AppCompatActivity {
+public class BeerSearchActivity extends AppCompatActivity
+        implements BeerSearchAdapter.OnBeerItemClickListener{
 
     Button mButtonSearch;
     EditText mEditTextSearch;
@@ -45,7 +47,7 @@ public class BeerSearchActivity extends AppCompatActivity {
         mSearchResultsRV.setLayoutManager(new LinearLayoutManager(this));
         mSearchResultsRV.setHasFixedSize(true);
 
-        mBeerSearchAdapter = new BeerSearchAdapter();
+        mBeerSearchAdapter = new BeerSearchAdapter(this);
         mSearchResultsRV.setAdapter(mBeerSearchAdapter);
 
         mButtonSearch.setOnClickListener(new View.OnClickListener() {
@@ -66,6 +68,13 @@ public class BeerSearchActivity extends AppCompatActivity {
         String beerSearchURL = BreweryDBUtils.buildBeerSearchURL(searchQueryBuilder.toString());
         Log.d("MainActivity", "got search url: " + beerSearchURL);
         new BrewerySearchTask().execute(beerSearchURL);
+    }
+
+    @Override
+    public void onBeerItemClick(BreweryDBUtils.beerDetail beerDetail) {
+        Intent intent = new Intent(this, BeerDescriptionActivity.class);
+        intent.putExtra(BreweryDBUtils.beerDetail.EXTRA_BEER_ITEM, beerDetail);
+        startActivity(intent);
     }
 
     public class BrewerySearchTask extends AsyncTask<String, Void, String> {
