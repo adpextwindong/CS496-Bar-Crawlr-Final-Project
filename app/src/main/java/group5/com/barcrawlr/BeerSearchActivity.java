@@ -1,8 +1,9 @@
 package group5.com.barcrawlr;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.content.AsyncTaskLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,14 +25,17 @@ import group5.com.barcrawlr.utils.NetworkUtils;
  */
 
 public class BeerSearchActivity extends AppCompatActivity
-        implements BeerSearchAdapter.OnBeerItemClickListener{
+        implements BeerSearchAdapter.OnBeerItemClickListener, android.support.v4.app.LoaderManager.LoaderCallbacks<String>{
 
+    private static final String TAG = "debug";
     Button mButtonSearch;
     EditText mEditTextSearch;
     RecyclerView mSearchResultsRV;
     ProgressBar mLoadingIndicatorPB;
     TextView mLoadingErrorMessageTV;
     BeerSearchAdapter mBeerSearchAdapter;
+    private static final String SEARCH_URL_KEY =
+            "BreweryDBSearchURL";
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -54,20 +58,13 @@ public class BeerSearchActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 doBrewerySearch(mEditTextSearch.getText().toString());
-                //TODO implement *_* in search
-                //search database for value
             }
         });
-    }
 
-    private void doBrewerySearch(String searchQuery)
-    {
-        StringBuilder searchQueryBuilder = new StringBuilder(searchQuery);
-        searchQueryBuilder.insert(0, '*');
-        searchQueryBuilder.append('*');
-        String beerSearchURL = BreweryDBUtils.buildBeerSearchURL(searchQueryBuilder.toString());
-        Log.d("MainActivity", "got search url: " + beerSearchURL);
-        new BrewerySearchTask().execute(beerSearchURL);
+        Bundle loaderArgs = new Bundle();
+        loaderArgs.putString(SEARCH_URL_KEY, null);
+
+        getSupportLoaderManager().initLoader(0, loaderArgs, this);
     }
 
     @Override
@@ -77,37 +74,82 @@ public class BeerSearchActivity extends AppCompatActivity
         startActivity(intent);
     }
 
-    public class BrewerySearchTask extends AsyncTask<String, Void, String> {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            mLoadingIndicatorPB.setVisibility(View.VISIBLE);
+    public void doBrewerySearch(String searchQuery) {
+        String beerSearchURL;
+        if(searchQuery!=null) {
+            StringBuilder searchQueryBuilder = new StringBuilder(searchQuery);
+            searchQueryBuilder.insert(0, '*');
+            searchQueryBuilder.append('*');
+            beerSearchURL = BreweryDBUtils.buildBeerSearchURL(searchQueryBuilder.toString());
+        }else {
+            beerSearchURL = null;
         }
 
-        @Override
-        protected String doInBackground(String... params) {
-            String beerSearchURL = params[0];
-            String searchResults = null;
-            try {
-                searchResults = NetworkUtils.doHTTPGet(beerSearchURL);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return searchResults;
-        }
+        Bundle loaderArgs = new Bundle();
+        loaderArgs.putString(SEARCH_URL_KEY, beerSearchURL);
 
-        @Override
-        protected void onPostExecute(String s) {
-            mLoadingIndicatorPB.setVisibility(View.INVISIBLE);
-            if (s != null) {
-                mLoadingErrorMessageTV.setVisibility(View.INVISIBLE);
-                mSearchResultsRV.setVisibility(View.VISIBLE);
-                ArrayList<BreweryDBUtils.beerDetail> searchResultsList = BreweryDBUtils.parseBeerSearchJSON(s);
-                mBeerSearchAdapter.updateSearchResults(searchResultsList);
-            } else {
-                mSearchResultsRV.setVisibility(View.INVISIBLE);
-                mLoadingErrorMessageTV.setVisibility(View.VISIBLE);
+        getSupportLoaderManager().restartLoader(0, loaderArgs, this);
+    }
+
+    @Override
+    public Loader<String> onCreateLoader(int id, final Bundle args) {
+        return new AsyncTaskLoader<String>(this) {
+            String mSearchResultsJSON;
+
+            @Override
+            protected void onStartLoading(){
+                if (mSearchResultsJSON != null || args.getString(SEARCH_URL_KEY) == null) {
+                    Log.d(TAG, "AsyncTaskLoader delivering cached results");
+                    deliverResult(mSearchResultsJSON);
+                } else {
+                    mLoadingIndicatorPB.setVisibility(View.VISIBLE);
+                    forceLoad();
+                }
             }
+
+            @Override
+            public String loadInBackground() {
+                if(args != null)
+                {
+                    String beerSearchURL = args.getString(SEARCH_URL_KEY);
+                    String beerJSON = null;
+                    try {
+                        Log.d(TAG, "loading results from BreweryDB with url: " + beerSearchURL);
+                        beerJSON = NetworkUtils.doHTTPGet(beerSearchURL);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    return beerJSON;
+                }
+                else
+                    return null;
+            }
+
+            @Override
+            public void deliverResult(String data) {
+                mSearchResultsJSON = data;
+                super.deliverResult(data);
+            }
+        };
+    }
+
+    @Override
+    public void onLoadFinished(Loader<String> loader, String data) {
+        mLoadingIndicatorPB.setVisibility(View.INVISIBLE);
+        if (data != null) {
+            mLoadingErrorMessageTV.setVisibility(View.INVISIBLE);
+            mSearchResultsRV.setVisibility(View.VISIBLE);
+            ArrayList<BreweryDBUtils.beerDetail> beerDetails = BreweryDBUtils.parseBeerSearchJSON(data);
+            mBeerSearchAdapter.updateSearchResults(beerDetails);
+        } else {
+            mSearchResultsRV.setVisibility(View.INVISIBLE);
+            mLoadingErrorMessageTV.setVisibility(View.VISIBLE);
         }
+        Log.d(TAG, "AsyncTaskLoader finished loading");
+    }
+
+    @Override
+    public void onLoaderReset(Loader<String> loader) {
+
     }
 }
