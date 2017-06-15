@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="group5.com.barcrawlr.EventSearchActivity">
+    tools:context="group5.com.barcrawlr.EventSearchActivity"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/tv_event_name"
@@ -23,10 +24,20 @@
         android:paddingRight="16dp"/>
 
     <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:textSize="25sp"
+        android:text="Description:"
+        android:textColor="#000" />
+
+    <TextView
         android:id="@+id/tv_event_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="16dp"
-        android:textSize="22dp"/>
+        android:textSize="18dp"
+        android:layout_marginLeft="16dp"/>
 
 </LinearLayout>

@@ -26,9 +26,9 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="40sp"
         android:textColor="#000"
-        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"
+        android:textSize="25sp"
         android:text="Description:"/>
 
     <TextView
@@ -36,14 +36,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="16dp"
-        android:textSize="22dp"/>
+        android:textSize="18dp"
+        android:layout_marginLeft="16dp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="40sp"
         android:textColor="#000"
-        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"
+        android:textSize="25sp"
         android:text="Characteristics:"/>
 
     <TextView
@@ -51,6 +52,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="16dp"
-        android:textSize="22dp"/>
+        android:textSize="18dp"
+        android:layout_marginLeft="16dp"/>
 
 </LinearLayout>
