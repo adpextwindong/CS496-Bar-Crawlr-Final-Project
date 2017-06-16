@@ -19,7 +19,7 @@ public class BreweryDBUtils {
     public static final String BASE_URL = "http://api.brewerydb.com/v2/";
     public static final String KEY_PARAM = "key";
     public static final String NAME_PARAM = "name";
-
+    public static final String POSTAL_CODE = "postalCode";
     public static final String API_KEY = "00018739ed2662a0c01fb436c996e404";
 
     public static class beerDetail implements Serializable {
@@ -60,13 +60,26 @@ public class BreweryDBUtils {
                 .toString();
     }
 
-    public static String buildBarSearchURL(String barName) {
-        return Uri.parse(BASE_URL).buildUpon()
-                .appendQueryParameter(KEY_PARAM, API_KEY)
-                .appendQueryParameter(NAME_PARAM, barName)
-                .appendPath("breweries")
-                .build()
-                .toString();
+    public static String buildBarSearchURL(String searchTerm, String searchByPref) {
+
+        String URL = "";
+        if(searchByPref.equals("zip")){
+            URL = Uri.parse(BASE_URL).buildUpon()
+                    .appendQueryParameter(KEY_PARAM, API_KEY)
+                    .appendQueryParameter(POSTAL_CODE, searchTerm)
+                    .appendPath("locations")
+                    .build()
+                    .toString();
+        }else{
+            URL = Uri.parse(BASE_URL).buildUpon()
+                    .appendQueryParameter(KEY_PARAM, API_KEY)
+                    .appendQueryParameter(NAME_PARAM, searchTerm)
+                    .appendPath("breweries")
+                    .build()
+                    .toString();
+        }
+
+        return URL;
     }
 
     public static String buildEventSearchURL(String eventName) {
@@ -126,55 +139,29 @@ public class BreweryDBUtils {
         }
     }
 
-    public static ArrayList<barDetail> parseBarSearchJSON(String barJSON) {
+    public static ArrayList<barDetail> parseBarSearchJSON(String barJSON, String searchByPref, String mSearchTerm) {
+
+        boolean searchByName = searchByPref.equals("name");
+        //TODO add image handling for POSTAL CODE breweries
+        ArrayList<barDetail> searchResultsList;
         try {
             JSONObject beerObj = new JSONObject(barJSON);
             JSONArray searchResultsItems = beerObj.getJSONArray("data");
 
-            ArrayList<barDetail> searchResultsList = new ArrayList<barDetail>();
-            for(int i=0; i<searchResultsItems.length(); i++)
-            {
-                barDetail searchResult = new barDetail();
+            searchResultsList = new ArrayList<barDetail>();
+            for (int i = 0; i < searchResultsItems.length(); i++) {
+                barDetail searchResult = null;
                 JSONObject searchResultItem = searchResultsItems.getJSONObject(i);
-                searchResult.barName = searchResultItem.getString("name");
 
-                try {
-                    searchResult.websiteUrl = searchResultItem.getString("website");
-                } catch (JSONException e) {
-                    searchResult.websiteUrl = "N/A";
+                if (searchByName) {
+                    searchResult = parseBarByNameData(searchResultItem, true);
+                    searchResultsList.add(searchResult);
+                } else {
+                    searchResult = parseBarByLocationsPostalCodeData(searchResultItem, mSearchTerm);
+
+                    searchResultsList.add(searchResult);
                 }
-
-                try {
-                    searchResult.isOrganic = searchResultItem.getString("isOrganic");
-                    /*if(temp == "Y")
-                        searchResult.isOrganic = true;
-                    else
-                        searchResult.isOrganic = false;*/
-                } catch (JSONException e) {
-                    searchResult.isOrganic = "N/A";
-                }
-
-                try {
-                    searchResult.established = searchResultItem.getString("established");
-                } catch (JSONException e) {
-                    searchResult.established = "N/A";
-                }
-
-                try{
-                    searchResult.imageUrl = searchResultItem.getJSONObject("images").getString("icon");
-                } catch (JSONException e) {
-                    searchResult.imageUrl = "N/A";
-                }
-
-                try{
-                    searchResult.description = searchResultItem.getString("description");
-                } catch (JSONException e) {
-                    searchResult.description = "N/A";
-                }
-
-                searchResultsList.add(searchResult);
             }
-            return searchResultsList;
         } catch (JSONException e) {
             e.printStackTrace();
             return null;
@@ -182,6 +169,93 @@ public class BreweryDBUtils {
             e.printStackTrace();
             return null;
         }
+
+        return searchResultsList;
+    }
+
+
+    private static barDetail parseBarByLocationsPostalCodeData(JSONObject searchResultItem, String mSearchTerm) {
+        barDetail searchResult = new barDetail();
+        String postalCode = null;
+
+        try {
+            postalCode = searchResultItem.getString("postalCode");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        if(postalCode != null && postalCode.equals(mSearchTerm)){
+            JSONObject brewObj = null;
+            try {
+                brewObj = searchResultItem.getJSONObject("brewery");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            if(brewObj != null){
+                searchResult = parseBarByNameData(brewObj, true);
+
+            }else{
+                searchResult = null;
+            }
+        }else{
+            searchResult = null;
+        }
+
+        return searchResult;
+    }
+
+    private static barDetail parseBarByNameData(JSONObject searchResultItem, boolean fromLocationsEndpoint) {
+        barDetail searchResult = new barDetail();
+
+        try {
+            searchResult.barName = searchResultItem.getString("name");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            searchResult.websiteUrl = searchResultItem.getString("website");
+        } catch (JSONException e) {
+            searchResult.websiteUrl = "N/A";
+        }
+
+        try {
+            searchResult.isOrganic = searchResultItem.getString("isOrganic");
+            /*
+            if(temp == "Y")
+                searchResult.isOrganic = true;
+            else
+                searchResult.isOrganic = false;
+            */
+        } catch (JSONException e) {
+            searchResult.isOrganic = "N/A";
+        }
+
+        try {
+            searchResult.established = searchResultItem.getString("established");
+        } catch (JSONException e) {
+            searchResult.established = "N/A";
+        }
+
+        if (!fromLocationsEndpoint) {
+            try {
+                searchResult.imageUrl = searchResultItem.getJSONObject("images").getString("icon");
+            } catch (JSONException e) {
+                searchResult.imageUrl = "N/A";
+            }
+        } else{
+            //TODO FINISH THIS. GET IMAGE URL FROM OTHER API ENDPOINT IDK...
+            searchResult.imageUrl = null;
+        }
+
+
+        try{
+            searchResult.description = searchResultItem.getString("description");
+        } catch (JSONException e) {
+            searchResult.description = "N/A";
+        }
+
+        return searchResult;
     }
 
     public static ArrayList<eventDetail> parseEventSearchJSON(String eventJSON) {

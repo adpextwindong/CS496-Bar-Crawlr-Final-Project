@@ -23,8 +23,18 @@
         <activity android:name=".EventSearchActivity" />
         <activity android:name=".BeerDescriptionActivity" />
         <activity android:name=".BarDescriptionActivity" />
-        <activity android:name=".FavoriteBeer"></activity>
-        <activity android:name=".FavoriteBars"></activity>
+        <activity android:name=".FavoriteBeer" />
+        <activity android:name=".FavoriteBars" />
+
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/action_settings"
+            android:parentActivityName=".BarSearchActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".BarSearchActivity" />
+
+        </activity>
     </application>
 
 </manifest>
