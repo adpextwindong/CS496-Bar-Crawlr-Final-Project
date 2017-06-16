@@ -85,7 +85,7 @@ public class EventSearchActivity extends AppCompatActivity
         }
 
         eventDetails.subList(index, eventDetails.size());*/
-        
+
         mEventSearchAdapter.updateSearchResults(eventDetails);
 
         Bundle loaderArgs = new Bundle();
