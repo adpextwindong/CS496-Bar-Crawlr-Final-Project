@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="group5.com.barcrawlr.BeerSearchActivity">
+    tools:context="group5.com.barcrawlr.EventSearchActivity">
 
     <EditText
         android:id="@+id/et_search_box"
@@ -13,7 +12,7 @@
         android:layout_height="wrap_content"
         android:textSize="24sp"
         android:fontFamily="serif"
-        android:hint="Search by beer name..."/>
+        android:hint="Search by location..."/>
 
     <Button
         android:id="@+id/btn_search"

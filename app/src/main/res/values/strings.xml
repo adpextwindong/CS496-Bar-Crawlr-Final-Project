@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">BarCrawlr</string>
-    <string name="Find_By_Location">Location</string>
-    <string name="Find_Events">Event</string>
-    <string name="Find_By_Beer">Beer</string>
+    <string name="Find_By_Location">Bars</string>
+    <string name="Find_Events">Events</string>
+    <string name="Find_By_Beer">Beers</string>
     <string name="view_favorite_beers" />
     <string name="action_view_fav_bars" />
     <string name="action_view_fav_beers" />

@@ -21,6 +21,10 @@ import group5.com.barcrawlr.utils.FavoritesDBHelper;
 public class BeerDescriptionActivity extends AppCompatActivity {
 
     TextView mBeerNameTV;
+    TextView mBeerDescriptionTV;
+    TextView mBeerABVTV;
+    TextView mBeerShortName;
+
     BreweryDBUtils.beerDetail beerItem;
     ImageView mSearchResultBookmarkIV;
     SQLiteDatabase mDB;
@@ -35,6 +39,9 @@ public class BeerDescriptionActivity extends AppCompatActivity {
 
         mSearchResultBookmarkIV = (ImageView)findViewById(R.id.iv_beer_search_result_bookmark);
         mBeerNameTV = (TextView) findViewById(R.id.tv_beer_name);
+        mBeerDescriptionTV = (TextView) findViewById(R.id.tv_beer_description);
+        mBeerABVTV = (TextView) findViewById(R.id.tv_beer_abv);
+        mBeerShortName = (TextView) findViewById(R.id.tv_beer_shortname);
 
         FavoritesDBHelper dbHelper = new FavoritesDBHelper(this);
         mDB = dbHelper.getWritableDatabase();
@@ -50,6 +57,9 @@ public class BeerDescriptionActivity extends AppCompatActivity {
         }
 
         mBeerNameTV.setText(beerItem.beerName);
+        mBeerDescriptionTV.setText(beerItem.description);
+        mBeerABVTV.setText(beerItem.abv);
+        mBeerShortName.setText(beerItem.style);
         mSearchResultBookmarkIV.setOnClickListener(new View.OnClickListener(){
 
             @Override
