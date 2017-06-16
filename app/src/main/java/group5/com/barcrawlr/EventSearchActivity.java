@@ -2,6 +2,7 @@ package group5.com.barcrawlr;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
@@ -15,7 +16,14 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
+import java.io.Writer;
 import java.util.ArrayList;
 
 import group5.com.barcrawlr.utils.BreweryDBUtils;
@@ -38,6 +46,10 @@ public class EventSearchActivity extends AppCompatActivity
     private static final String SEARCH_URL_KEY =
             "BreweryDBSearchURL";
 
+    public static String eventJSON = null;
+    public static String eventSearchURL = null;
+
+
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -55,7 +67,8 @@ public class EventSearchActivity extends AppCompatActivity
         mEventSearchAdapter = new EventSearchAdapter(this);
         mSearchResultsRV.setAdapter(mEventSearchAdapter);
 
-        String eventSearchURL = Uri.parse("http://api.brewerydb.com/v2/").buildUpon()
+
+        eventSearchURL = Uri.parse("http://api.brewerydb.com/v2/").buildUpon()
                 .appendQueryParameter("key", "00018739ed2662a0c01fb436c996e404")
                 .appendQueryParameter("order", "startDate")
                 .appendQueryParameter("sort", "ASC")
@@ -64,12 +77,30 @@ public class EventSearchActivity extends AppCompatActivity
                 .build()
                 .toString();
 
-        String eventJSON = null;
+
+        InputStream is = getResources().openRawResource(R.raw.events);
+        Writer writer = new StringWriter();
+        char[] buffer = new char[1024];
         try {
-            eventJSON = NetworkUtils.doHTTPGet(eventSearchURL);
+            Reader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+            int n;
+            while ((n = reader.read(buffer)) != -1) {
+                writer.write(buffer, 0, n);
+            }
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                is.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+
+        eventJSON = writer.toString();
+
 
         mSearchResultsRV.setVisibility(View.VISIBLE);
         ArrayList<BreweryDBUtils.eventDetail> eventDetails = BreweryDBUtils.parseEventSearchJSON(eventJSON);
