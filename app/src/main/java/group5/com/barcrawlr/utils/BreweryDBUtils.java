@@ -41,8 +41,17 @@ public class BreweryDBUtils {
         public String imageUrl;
     }
 
-    public static String buildBeerSearchURL(String beerName) {
+    public static class eventDetail implements Serializable {
+        public static final String EXTRA_EVENT_ITEM = "group5.com.barcrawlr.utils.EventItem.SearchResult";
+        public String eventName;
+        public String date;
+        public String description;
+        public String year;
+        public String websiteUrl;
+        public String imageUrl;
+    }
 
+    public static String buildBeerSearchURL(String beerName) {
         return Uri.parse(BASE_URL).buildUpon()
                 .appendQueryParameter(KEY_PARAM, API_KEY)
                 .appendQueryParameter(NAME_PARAM, beerName)
@@ -52,11 +61,19 @@ public class BreweryDBUtils {
     }
 
     public static String buildBarSearchURL(String barName) {
-
         return Uri.parse(BASE_URL).buildUpon()
                 .appendQueryParameter(KEY_PARAM, API_KEY)
                 .appendQueryParameter(NAME_PARAM, barName)
                 .appendPath("breweries")
+                .build()
+                .toString();
+    }
+
+    public static String buildEventSearchURL(String eventName) {
+        return Uri.parse(BASE_URL).buildUpon()
+                .appendQueryParameter(KEY_PARAM, API_KEY)
+                .appendQueryParameter(NAME_PARAM, eventName)
+                .appendPath("events")
                 .build()
                 .toString();
     }
@@ -153,6 +170,60 @@ public class BreweryDBUtils {
                     searchResult.description = searchResultItem.getString("description");
                 } catch (JSONException e) {
                     searchResult.description = "N/A";
+                }
+
+                searchResultsList.add(searchResult);
+            }
+            return searchResultsList;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static ArrayList<eventDetail> parseEventSearchJSON(String eventJSON) {
+        try {
+            JSONObject eventObj = new JSONObject(eventJSON);
+            JSONArray searchResultsItems = eventObj.getJSONArray("data");
+
+            ArrayList<eventDetail> searchResultsList = new ArrayList<eventDetail>();
+            for(int i=0; i<searchResultsItems.length(); i++)
+            {
+                eventDetail searchResult = new eventDetail();
+                JSONObject searchResultItem = searchResultsItems.getJSONObject(i);
+                searchResult.eventName = searchResultItem.getString("name");
+
+                try {
+                    searchResult.date = searchResultItem.getString("startDate");
+                } catch (JSONException e) {
+                    searchResult.date = "N/A";
+                }
+
+                try{
+                    searchResult.description = searchResultItem.getString("description");
+                } catch (JSONException e) {
+                    searchResult.description = "N/A";
+                }
+
+                try{
+                    searchResult.year = searchResultItem.getString("year");
+                } catch (JSONException e) {
+                    searchResult.year = "N/A";
+                }
+
+                try {
+                    searchResult.websiteUrl = searchResultItem.getString("website");
+                } catch (JSONException e) {
+                    searchResult.websiteUrl = "N/A";
+                }
+
+                try{
+                    searchResult.imageUrl = searchResultItem.getJSONObject("labels").getString("icon");
+                } catch (JSONException e) {
+                    searchResult.imageUrl = null;
                 }
 
                 searchResultsList.add(searchResult);
