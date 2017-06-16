@@ -125,41 +125,25 @@ public class BreweryDBUtils {
 
         boolean searchByName = searchByPref.equals("name");
         //TODO add image handling for POSTAL CODE breweries
+        ArrayList<barDetail> searchResultsList;
         try {
             JSONObject beerObj = new JSONObject(barJSON);
             JSONArray searchResultsItems = beerObj.getJSONArray("data");
 
-            ArrayList<barDetail> searchResultsList = new ArrayList<barDetail>();
-            for(int i=0; i<searchResultsItems.length(); i++)
-            {
+            searchResultsList = new ArrayList<barDetail>();
+            for (int i = 0; i < searchResultsItems.length(); i++) {
                 barDetail searchResult = null;
                 JSONObject searchResultItem = searchResultsItems.getJSONObject(i);
 
-                if(searchByName) {
+                if (searchByName) {
                     searchResult = parseBarByNameData(searchResultItem, true);
                     searchResultsList.add(searchResult);
-                }else{
-                    //TODO FINISH THIS
+                } else {
                     searchResult = parseBarByLocationsPostalCodeData(searchResultItem, mSearchTerm);
 
-
-
-
-                try {
-                    searchResult.isOrganic = searchResultItem.getString("isOrganic");
-                    /*if(temp == "Y")
-                        searchResult.isOrganic = true;
-                    else
-                        searchResult.isOrganic = false;*/
-                } catch (JSONException e) {
-                    searchResult.isOrganic = "N/A";
-
+                    searchResultsList.add(searchResult);
                 }
-                searchResultsList.add(searchResult);
-
-
             }
-            return searchResultsList;
         } catch (JSONException e) {
             e.printStackTrace();
             return null;
@@ -167,7 +151,10 @@ public class BreweryDBUtils {
             e.printStackTrace();
             return null;
         }
+
+        return searchResultsList;
     }
+
 
     private static barDetail parseBarByLocationsPostalCodeData(JSONObject searchResultItem, String mSearchTerm) {
         barDetail searchResult = new barDetail();
@@ -215,13 +202,15 @@ public class BreweryDBUtils {
         }
 
         try {
-            String temp = searchResultItem.getString("isOrganic");
+            searchResult.isOrganic = searchResultItem.getString("isOrganic");
+            /*
             if(temp == "Y")
                 searchResult.isOrganic = true;
             else
                 searchResult.isOrganic = false;
+            */
         } catch (JSONException e) {
-            searchResult.established = "N/A";
+            searchResult.isOrganic = "N/A";
         }
 
         try {

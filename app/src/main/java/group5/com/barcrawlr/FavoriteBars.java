@@ -87,12 +87,15 @@ public class FavoriteBars extends AppCompatActivity implements BarSearchAdapter.
                     cursor.getColumnIndex(FavoritesContract.FavoriteBars.COLUMN_IS_ORGANIC)
             );
 
+            result.isOrganic = organicString;
+
             //TODO FIX?
+            /*
             if(organicString.equals("True")){
                 result.isOrganic = true;
             }else{
                 result.isOrganic = false;
-            }
+            }*/
 
             result.imageUrl = cursor.getString(
                     cursor.getColumnIndex(FavoritesContract.FavoriteBars.COLUMN_IMAGE_URL)
