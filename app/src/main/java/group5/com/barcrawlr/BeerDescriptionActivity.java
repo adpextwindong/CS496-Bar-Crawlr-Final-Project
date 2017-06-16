@@ -19,7 +19,6 @@ import group5.com.barcrawlr.utils.FavoritesDBHelper;
  */
 
 public class BeerDescriptionActivity extends AppCompatActivity {
-
     TextView mBeerNameTV;
     TextView mBeerDescriptionTV;
     TextView mBeerABVTV;
@@ -60,6 +59,7 @@ public class BeerDescriptionActivity extends AppCompatActivity {
         mBeerDescriptionTV.setText(beerItem.description);
         mBeerABVTV.setText(beerItem.abv);
         mBeerShortName.setText(beerItem.style);
+
         mSearchResultBookmarkIV.setOnClickListener(new View.OnClickListener(){
 
             @Override
