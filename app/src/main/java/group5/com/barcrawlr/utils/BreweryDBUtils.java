@@ -154,7 +154,7 @@ public class BreweryDBUtils {
                 JSONObject searchResultItem = searchResultsItems.getJSONObject(i);
 
                 if (searchByName) {
-                    searchResult = parseBarByNameData(searchResultItem, true);
+                    searchResult = parseBarByNameData(searchResultItem, false);
                     searchResultsList.add(searchResult);
                 } else {
                     searchResult = parseBarByLocationsPostalCodeData(searchResultItem, mSearchTerm);
