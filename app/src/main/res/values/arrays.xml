@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="pref_searchby_entries">
+        <item>Name</item>
+        <item>Zip</item>
+    </string-array>
+
+    <string-array name="pref_searchby_values">
+        <item>name</item>
+        <item>zip</item>
+    </string-array>
+
+</resources>
