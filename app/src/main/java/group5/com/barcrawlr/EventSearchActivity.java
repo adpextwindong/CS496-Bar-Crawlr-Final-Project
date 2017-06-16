@@ -1,6 +1,7 @@
 package group5.com.barcrawlr;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
@@ -54,12 +55,38 @@ public class EventSearchActivity extends AppCompatActivity
         mEventSearchAdapter = new EventSearchAdapter(this);
         mSearchResultsRV.setAdapter(mEventSearchAdapter);
 
-        mButtonSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                doBrewerySearch(mEditTextSearch.getText().toString());
+        String eventSearchURL = Uri.parse("http://api.brewerydb.com/v2/").buildUpon()
+                .appendQueryParameter("key", "00018739ed2662a0c01fb436c996e404")
+                .appendQueryParameter("order", "startDate")
+                .appendQueryParameter("sort", "ASC")
+                .appendQueryParameter("year", "2017")
+                .appendPath("events")
+                .build()
+                .toString();
+
+        String eventJSON = null;
+        try {
+            eventJSON = NetworkUtils.doHTTPGet(eventSearchURL);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        mSearchResultsRV.setVisibility(View.VISIBLE);
+        ArrayList<BreweryDBUtils.eventDetail> eventDetails = BreweryDBUtils.parseEventSearchJSON(eventJSON);
+
+        /*int index = 0;
+        for (int i = 0; i <= eventDetails.size(); i++) {
+            String element = eventDetails.get(i).date;
+            if(){
+
+                break;
             }
-        });
+            index++;
+        }
+
+        eventDetails.subList(index, eventDetails.size());*/
+        
+        mEventSearchAdapter.updateSearchResults(eventDetails);
 
         Bundle loaderArgs = new Bundle();
         loaderArgs.putString(SEARCH_URL_KEY, null);
@@ -138,11 +165,11 @@ public class EventSearchActivity extends AppCompatActivity
         mLoadingIndicatorPB.setVisibility(View.INVISIBLE);
         if (data != null) {
             mLoadingErrorMessageTV.setVisibility(View.INVISIBLE);
-            mSearchResultsRV.setVisibility(View.VISIBLE);
+            /*mSearchResultsRV.setVisibility(View.VISIBLE);
             ArrayList<BreweryDBUtils.eventDetail> eventDetails = BreweryDBUtils.parseEventSearchJSON(data);
-            mEventSearchAdapter.updateSearchResults(eventDetails);
+            mEventSearchAdapter.updateSearchResults(eventDetails);*/
         } else {
-            mSearchResultsRV.setVisibility(View.INVISIBLE);
+            /*mSearchResultsRV.setVisibility(View.INVISIBLE);*/
             mLoadingErrorMessageTV.setVisibility(View.VISIBLE);
         }
         Log.d(TAG, "AsyncTaskLoader finished loading");
