@@ -11,6 +11,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+
 import group5.com.barcrawlr.utils.BreweryDBUtils;
 import group5.com.barcrawlr.utils.FavoritesContract;
 import group5.com.barcrawlr.utils.FavoritesDBHelper;
@@ -80,6 +83,10 @@ public class BarDescriptionActivity extends AppCompatActivity {
                 updateBookmarkIconState();
             }
         });
+
+        Glide.with(mBarImageIV.getContext())
+                .load(barItem.imageUrl)
+                .into(mBarImageIV);
     }
 
     private void updateSearchResultInDB() {
