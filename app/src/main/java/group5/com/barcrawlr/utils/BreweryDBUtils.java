@@ -73,7 +73,7 @@ public class BreweryDBUtils {
         }else{
             URL = Uri.parse(BASE_URL).buildUpon()
                     .appendQueryParameter(KEY_PARAM, API_KEY)
-                    .appendQueryParameter(NAME_PARAM, searchTerm)
+                    .appendQueryParameter(NAME_PARAM, "*"+searchTerm+"*")
                     .appendPath("breweries")
                     .build()
                     .toString();
