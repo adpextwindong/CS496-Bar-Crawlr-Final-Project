@@ -10,7 +10,6 @@
         <item name="colorPrimary">@color/primary_material_dark</item>
         <item name="colorPrimaryDark">@color/accent_material_light</item>
         <item name="colorAccent">@color/primary_dark_material_dark</item>
-
         <item name="preferenceTheme">
             @style/PreferenceThemeOverlay.v14.Material
         </item>

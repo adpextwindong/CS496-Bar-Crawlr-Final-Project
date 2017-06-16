@@ -11,40 +11,46 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#000"
-        android:padding="20dp"
         android:layout_gravity="center"
-        android:textSize="40sp"
-        android:text="Search for"/>
+        android:fontFamily="serif"
+        android:padding="20dp"
+        android:text="Search for"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="#000"
+        android:textSize="36sp" />
 
     <Button
         android:id="@+id/FindByLocation"
+        style="@style/Widget.AppCompat.Button"
         android:layout_width="230dp"
         android:layout_height="80dp"
         android:layout_gravity="center"
         android:layout_margin="16dp"
-        android:textSize="22sp"
-        android:background="@android:color/white"
-        android:text="@string/Find_By_Location"/>
+        android:background="@color/tan"
+        android:fontFamily="serif"
+        android:text="@string/Find_By_Location"
+        android:textSize="22sp" />
 
     <Button
+        android:id="@+id/FindByBeer"
         android:layout_width="230dp"
         android:layout_height="80dp"
         android:layout_gravity="center"
         android:layout_margin="16dp"
-        android:textSize="22sp"
-        android:background="@android:color/white"
+        android:background="@color/tan"
+        android:fontFamily="serif"
         android:text="@string/Find_By_Beer"
-        android:id="@+id/FindByBeer"/>
+        android:textSize="22sp" />
 
     <Button
+        android:id="@+id/FindByEvent"
         android:layout_width="230dp"
         android:layout_height="80dp"
         android:layout_gravity="center"
         android:layout_margin="16dp"
-        android:textSize="22sp"
-        android:background="@android:color/white"
+        android:background="@color/tan"
+        android:fontFamily="serif"
         android:text="@string/Find_Events"
-        android:id="@+id/FindByEvent"/>
+        android:textSize="22sp" />
 
 </LinearLayout>

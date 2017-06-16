@@ -21,6 +21,13 @@ import group5.com.barcrawlr.utils.FavoritesDBHelper;
 
 public class BarDescriptionActivity extends AppCompatActivity {
     TextView mBarNameTV;
+    TextView mBarDescriptionTV;
+    TextView mBarCharacteristicsTV;
+    TextView mBarWebsiteTV;
+    TextView mBarOrganicTV;
+
+    ImageView mBarImageIV;
+
     BreweryDBUtils.barDetail barItem;
     ImageView mSearchResultBookmarkIV;
     SQLiteDatabase mDB;
@@ -37,9 +44,14 @@ public class BarDescriptionActivity extends AppCompatActivity {
 
         mSearchResultBookmarkIV = (ImageView)findViewById(R.id.iv_beer_search_result_bookmark);
         mBarNameTV = (TextView) findViewById(R.id.tv_bar_name);
+        mBarDescriptionTV = (TextView) findViewById(R.id.tv_bar_description);
+        mBarCharacteristicsTV = (TextView) findViewById(R.id.tv_bar_established);
+        mBarOrganicTV = (TextView) findViewById(R.id.tv_bar_organic);
+        mBarWebsiteTV = (TextView) findViewById(R.id.tv_bar_website);
+
+        mBarImageIV = (ImageView) findViewById(R.id.iv_bar_image);
         FavoritesDBHelper dbHelper = new FavoritesDBHelper(this);
         mDB = dbHelper.getWritableDatabase();
-
 
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra(BreweryDBUtils.barDetail.EXTRA_BAR_ITEM )) {
@@ -52,6 +64,12 @@ public class BarDescriptionActivity extends AppCompatActivity {
         }
 
         mBarNameTV.setText(barItem.barName);
+        mBarDescriptionTV.setText(barItem.description);
+        mBarCharacteristicsTV.setText(barItem.established);
+        mBarWebsiteTV.setText(barItem.websiteUrl);
+        mBarOrganicTV.setText(barItem.isOrganic);
+
+        /*mBarImageIV.setText(barItem.imageUrl); Need to download image*/
 
         mSearchResultBookmarkIV.setOnClickListener(new View.OnClickListener(){
 
@@ -128,5 +146,6 @@ public class BarDescriptionActivity extends AppCompatActivity {
     protected void onDestroy() {
         mDB.close();
         super.onDestroy();
+
     }
 }

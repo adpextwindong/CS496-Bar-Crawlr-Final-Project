@@ -36,7 +36,7 @@ public class BreweryDBUtils {
         public String barName;
         public String description;
         public String established;
-        public boolean isOrganic;
+        public String isOrganic;
         public String websiteUrl;
         public String imageUrl;
     }
@@ -142,9 +142,20 @@ public class BreweryDBUtils {
                     //TODO FINISH THIS
                     searchResult = parseBarByLocationsPostalCodeData(searchResultItem, mSearchTerm);
 
-                    searchResultsList.add(searchResult);
-                }
 
+
+
+                try {
+                    searchResult.isOrganic = searchResultItem.getString("isOrganic");
+                    /*if(temp == "Y")
+                        searchResult.isOrganic = true;
+                    else
+                        searchResult.isOrganic = false;*/
+                } catch (JSONException e) {
+                    searchResult.isOrganic = "N/A";
+
+                }
+                searchResultsList.add(searchResult);
 
 
             }
