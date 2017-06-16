@@ -7,6 +7,12 @@
     android:layout_height="match_parent"
     tools:context="group5.com.barcrawlr.BarSearchActivity">
 
+    <ImageView
+        android:id="@+id/iv_beer_search_result_bookmark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_bookmark_border_black_48dp"/>
+
     <TextView
         android:id="@+id/tv_bar_name"
         android:layout_width="wrap_content"
