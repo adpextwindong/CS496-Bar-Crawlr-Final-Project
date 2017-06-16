@@ -36,7 +36,7 @@ public class BreweryDBUtils {
         public String barName;
         public String description;
         public String established;
-        public boolean isOrganic;
+        public String isOrganic;
         public String websiteUrl;
         public String imageUrl;
     }
@@ -128,13 +128,13 @@ public class BreweryDBUtils {
                 }
 
                 try {
-                    String temp = searchResultItem.getString("isOrganic");
-                    if(temp == "Y")
+                    searchResult.isOrganic = searchResultItem.getString("isOrganic");
+                    /*if(temp == "Y")
                         searchResult.isOrganic = true;
                     else
-                        searchResult.isOrganic = false;
+                        searchResult.isOrganic = false;*/
                 } catch (JSONException e) {
-                    searchResult.established = "N/A";
+                    searchResult.isOrganic = "N/A";
                 }
 
                 try {

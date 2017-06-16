@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="group5.com.barcrawlr.BeerSearchActivity">
+    tools:context="group5.com.barcrawlr.BeerDescriptionActivity">
 
     <TextView
         android:id="@+id/tv_beer_name"
@@ -14,7 +14,20 @@
         android:layout_height="wrap_content"
         android:textSize="40sp"
         android:textColor="#000"
+        android:fontFamily="serif"
+        android:padding="14dp"
+        android:paddingBottom="20dp"
         android:layout_marginRight="16dp"/>
+
+    <TextView
+        android:id="@+id/tv_beer_shortname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:textSize="20sp"
+        android:fontFamily="serif"
+        android:paddingBottom="12dp"
+        android:textColor="@color/accent_material_light"/>
 
     <ImageView
         android:id="@+id/iv_beer_image"
@@ -29,6 +42,7 @@
         android:textColor="#000"
         android:layout_marginLeft="16dp"
         android:textSize="25sp"
+        android:fontFamily="serif"
         android:text="Description:"/>
 
     <TextView
@@ -37,22 +51,25 @@
         android:layout_height="wrap_content"
         android:padding="16dp"
         android:textSize="18dp"
+        android:fontFamily="serif"
         android:layout_marginLeft="16dp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#000"
-        android:layout_marginLeft="16dp"
-        android:textSize="25sp"
-        android:text="Characteristics:"/>
+        android:layout_marginLeft="22dp"
+        android:textSize="20sp"
+        android:fontFamily="serif"
+        android:text="ABV:"/>
 
     <TextView
-        android:id="@+id/tv_beer_characteristics"
+        android:id="@+id/tv_beer_abv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="16dp"
         android:textSize="18dp"
-        android:layout_marginLeft="16dp"/>
+        android:fontFamily="serif"
+        android:layout_marginLeft="22dp"/>
 
 </LinearLayout>

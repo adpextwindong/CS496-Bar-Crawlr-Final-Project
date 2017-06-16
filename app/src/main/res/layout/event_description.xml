@@ -13,6 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="40sp"
+        android:fontFamily="serif"
         android:textColor="#000"
         android:layout_marginRight="16dp"/>
 
@@ -29,6 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:textSize="25sp"
+        android:fontFamily="serif"
         android:text="Description:"
         android:textColor="#000" />
 
@@ -38,6 +40,7 @@
         android:layout_height="wrap_content"
         android:padding="16dp"
         android:textSize="18dp"
+        android:fontFamily="serif"
         android:layout_marginLeft="16dp"/>
 
 </LinearLayout>
