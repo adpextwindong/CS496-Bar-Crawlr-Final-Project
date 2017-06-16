@@ -12,4 +12,12 @@
         android:entryValues="@array/pref_searchby_values"
         android:defaultValue="@string/pref_searchby_default" />
 
+    <EditTextPreference
+        android:key="@string/pref_zip_key"
+        android:title="@string/pref_zip_title"
+        android:dialogTitle="@string/pref_zip_title"
+        android:summary="%s"
+        android:defaultValue="@string/pref_zip_default" />
+        />
+
 </PreferenceScreen>
