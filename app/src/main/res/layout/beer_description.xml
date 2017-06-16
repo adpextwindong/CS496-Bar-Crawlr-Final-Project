@@ -8,6 +8,12 @@
     android:orientation="vertical"
     tools:context="group5.com.barcrawlr.BeerDescriptionActivity">
 
+    <ImageView
+        android:id="@+id/iv_beer_search_result_bookmark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_bookmark_border_black_48dp"/>
+
     <TextView
         android:id="@+id/tv_beer_name"
         android:layout_width="wrap_content"
