@@ -78,8 +78,8 @@ public class BarSearchActivity extends AppCompatActivity
         String barSearchURL;
         if(searchQuery!=null) {
             StringBuilder searchQueryBuilder = new StringBuilder(searchQuery);
-            searchQueryBuilder.insert(0, '*');
-            searchQueryBuilder.append('*');
+            //searchQueryBuilder.insert(0, '*');
+            //searchQueryBuilder.append('*');
             barSearchURL = BreweryDBUtils.buildBarSearchURL(searchQueryBuilder.toString());
         }else {
             barSearchURL = null;
