@@ -52,7 +52,7 @@ public class FavoriteBars extends AppCompatActivity implements BarSearchAdapter.
     @Override
     public void onBarItemClick(BreweryDBUtils.barDetail barDetail) {
         Intent intent = new Intent(this, BarDescriptionActivity.class);
-        intent.putExtra(BreweryDBUtils.beerDetail.EXTRA_BEER_ITEM, barDetail);
+        intent.putExtra(BreweryDBUtils.barDetail.EXTRA_BAR_ITEM, barDetail);
         startActivity(intent);
     }
 
