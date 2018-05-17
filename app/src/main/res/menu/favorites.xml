@@ -10,6 +10,6 @@
         android:id="@+id/action_view_fav_beers"
         android:icon="@mipmap/ic_favoritebeers"
         android:title="@string/action_view_fav_beers"
-        app:showAsAction="never" />
+        app:showAsAction="ifRoom" />
 
 </menu>

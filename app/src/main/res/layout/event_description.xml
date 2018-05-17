@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="group5.com.barcrawlr.EventSearchActivity"
+    tools:context="group5.com.barcrawlr.EventDescriptionActivity"
     android:orientation="vertical">
 
     <TextView
@@ -16,6 +16,16 @@
         android:fontFamily="serif"
         android:textColor="#000"
         android:layout_marginRight="16dp"/>
+
+    <TextView
+        android:id="@+id/tv_event_website"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:textSize="20sp"
+        android:fontFamily="serif"
+        android:paddingBottom="12dp"
+        android:textColor="@color/accent_material_light"/>
 
     <ImageView
         android:id="@+id/iv_event_image"
@@ -42,5 +52,23 @@
         android:textSize="18dp"
         android:fontFamily="serif"
         android:layout_marginLeft="16dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#000"
+        android:layout_marginLeft="22dp"
+        android:textSize="20sp"
+        android:fontFamily="serif"
+        android:text="Date:"/>
+
+    <TextView
+        android:id="@+id/tv_event_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:textSize="18dp"
+        android:fontFamily="serif"
+        android:layout_marginLeft="22dp"/>
 
 </LinearLayout>

@@ -5,8 +5,8 @@
     <string name="Panic_Pint">Panic Pint</string>
     <string name="Find_By_Beer">Beers</string>
     <string name="view_favorite_beers" />
-    <string name="action_view_fav_bars" />
-    <string name="action_view_fav_beers" />
+    <string name="action_view_fav_bars">Favorite Bars</string>
+    <string name="action_view_fav_beers">Favorite Beers</string>
 
     <string name="pref_user_key">pref_user</string>
     <string name="pref_searchby_key">pref_searchby</string>
