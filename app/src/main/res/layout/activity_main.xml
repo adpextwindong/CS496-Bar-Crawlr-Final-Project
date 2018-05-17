@@ -53,4 +53,15 @@
         android:text="@string/Find_Events"
         android:textSize="22sp" />
 
+    <Button
+        android:id="@+id/PanicPint"
+        android:layout_width="230dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center"
+        android:layout_margin="16dp"
+        android:background="@color/tan"
+        android:fontFamily="serif"
+        android:text="@string/Panic_Pint"
+        android:textSize="22sp" />
+
 </LinearLayout>

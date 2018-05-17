@@ -144,6 +144,41 @@ public class BreweryDBUtils {
         }
     }
 
+    public static String parseRandomLocalBarForPanicPint(String barJSON){
+        JSONObject barObj = null;
+        JSONArray searchResultsItems = null;
+        try {
+            barObj = new JSONObject(barJSON);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            searchResultsItems = barObj.getJSONArray("data");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JSONObject randomBarObj = null;
+        try {
+            //TODO Make this random
+            randomBarObj = (JSONObject) searchResultsItems.get(0);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        String latlong = "";
+        try {
+            String lat = randomBarObj.getString("latitude");
+            String longitude = randomBarObj.getString("longitude");
+
+            latlong = lat + "," + longitude;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        //latitude,longitude
+
+        return latlong;
+    }
     public static ArrayList<barDetail> parseBarSearchJSON(String barJSON, String searchByPref, String mSearchTerm) {
 
         boolean searchByName = searchByPref.equals("name");
@@ -209,7 +244,7 @@ public class BreweryDBUtils {
         return searchResult;
     }
 
-    private static barDetail parseBarByNameData(JSONObject searchResultItem, boolean fromLocationsEndpoint) {
+    public static barDetail parseBarByNameData(JSONObject searchResultItem, boolean fromLocationsEndpoint) {
         barDetail searchResult = new barDetail();
 
         try {
